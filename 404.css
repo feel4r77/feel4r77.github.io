@@ -1,0 +1,83 @@
+/* =========================================================
+   BIZMAX — Strona 404
+   Bazuje na tokenach i klasach z main.css (wrap, btn, eyebrow,
+   site-header, hero-grid). Tutaj tylko style unikalne dla 404.
+   ========================================================= */
+
+.error-hero{
+  position: relative;
+  background: var(--ink);
+  color: var(--white);
+  overflow: hidden;
+  min-height: calc(100svh - 76px - 64px);
+  display: flex;
+  align-items: center;
+  padding: 64px 0;
+}
+
+.error-inner{
+  position: relative;
+  max-width: 620px;
+  text-align: left;
+}
+
+.error-hero .eyebrow{ color: #9FD8C8; }
+
+.ledger-mark{
+  width: 180px;
+  margin: 0 0 32px;
+  opacity: .9;
+}
+.ledger-mark .ln{
+  stroke: rgba(247,244,238,.35);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.ledger-mark .ln.thick{
+  stroke: rgba(247,244,238,.6);
+}
+.ledger-mark .x-mark line{
+  stroke: #E07856;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.error-hero h1{
+  color: var(--white);
+  font-size: clamp(34px, 5.4vw, 54px);
+  margin-bottom: .4em;
+}
+.error-hero h1 em{
+  font-style: normal;
+  color: #9FD8C8;
+}
+
+.error-lead{
+  font-size: 18px;
+  color: rgba(247,244,238,.78);
+  max-width: 480px;
+  margin-bottom: 2em;
+}
+
+.error-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+
+.error-code{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(64px, 12vw, 128px);
+  line-height: 1;
+  margin: 0;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(247,244,238,.18);
+  letter-spacing: .02em;
+}
+
+@media (max-width: 760px){
+  .error-hero{ min-height: auto; padding: 48px 0 56px; }
+  .ledger-mark{ width: 140px; }
+}
