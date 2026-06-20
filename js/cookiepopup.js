@@ -1,13 +1,12 @@
-var cookiePopupTitle = "🍪 Pliki Cookies"; 
-var cookiePopupDesc = "Ta strona korzysta z plików cookies aby świadczyć usługi na najwyższym poziomie. Dalsze korzystanie ze strony oznacza, że zgadzasz się na ich użycie.<br>"; 
-var cookiePopupLink = '<a href="https://wszystkoociasteczkach.pl/po-co-sa-ciasteczka/" target="_blank">Więcej informacji</a>'; 
-var cookiePopupButton = "Rozumiem"; 
+var cookiePopupTitle = "🍪 Pliki Cookies";
+var cookiePopupDesc = "Ta strona korzysta z plików cookies aby świadczyć usługi na najwyższym poziomie. Dalsze korzystanie ze strony oznacza, że zgadzasz się na ich użycie.<br>";
+var cookiePopupLink = '<a href="https://wszystkoociasteczkach.pl/po-co-sa-ciasteczka/" target="_blank">Więcej informacji</a>';
+var cookiePopupButton = "Rozumiem";
 
 function pureFadeIn(elem, display){
   var el = document.getElementById(elem);
   el.style.opacity = 0;
   el.style.display = display || "block";
-
   (function fade() {
     var val = parseFloat(el.style.opacity);
     if (!((val += .02) > 1)) {
@@ -16,10 +15,10 @@ function pureFadeIn(elem, display){
     }
   })();
 };
+
 function pureFadeOut(elem){
   var el = document.getElementById(elem);
   el.style.opacity = 1;
-
   (function fade() {
     if ((el.style.opacity -= .02) < 0) {
       el.style.display = "none";
@@ -38,6 +37,7 @@ function setCookie(name,value,days) {
     }
     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -48,8 +48,9 @@ function getCookie(name) {
     }
     return null;
 }
-function eraseCookie(name) {   
-    document.cookie = name+'=; Max-Age=-99999999;';  
+
+function eraseCookie(name) {
+    document.cookie = name+'=; Max-Age=-99999999;';
 }
 
 function cookiePopupBox() {
