@@ -1,94 +1,68 @@
-/* =========================================================
-   BIZMAX — Cookie popup
-   Dopasowany do struktury generowanej przez js/cookiepopup.js:
-   .cookiePopupBoxContainer > .cookieTitle, .cookieDesc, .cookieButton
-   Korzysta z tokenów zdefiniowanych w main.css (--ink, --emerald, itd.)
-   ========================================================= */
+var cookiePopupTitle = "🍪 Pliki Cookies";
+var cookiePopupDesc = "Ta strona korzysta z plików cookies aby świadczyć usługi na najwyższym poziomie. Dalsze korzystanie ze strony oznacza, że zgadzasz się na ich użycie.<br>";
+var cookiePopupLink = '<a href="https://wszystkoociasteczkach.pl/po-co-sa-ciasteczka/" target="_blank">Więcej informacji</a>';
+var cookiePopupButton = "Rozumiem";
 
-.cookiePopupBoxContainer{
-  display: none;
-  position: fixed;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  z-index: 999;
-  max-width: 480px;
-  margin: 0 auto;
+function pureFadeIn(elem, display){
+  var el = document.getElementById(elem);
+  el.style.opacity = 0;
+  el.style.display = display || "block";
+  (function fade() {
+    var val = parseFloat(el.style.opacity);
+    if (!((val += .02) > 1)) {
+      el.style.opacity = val;
+      requestAnimationFrame(fade);
+    }
+  })();
+};
 
-  background: var(--ink, #0F2A3D);
-  color: var(--cream, #F7F4EE);
-  border-radius: var(--radius, 14px);
-  padding: 22px 24px;
-  box-shadow: 0 16px 40px -12px rgba(15, 42, 61, .45);
+function pureFadeOut(elem){
+  var el = document.getElementById(elem);
+  el.style.opacity = 1;
+  (function fade() {
+    if ((el.style.opacity -= .02) < 0) {
+      el.style.display = "none";
+    } else {
+      requestAnimationFrame(fade);
+    }
+  })();
+};
 
-  font-family: var(--font-body, "Inter", "Open Sans", sans-serif);
-  font-size: 14px;
-  line-height: 1.55;
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*4300));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }
 
-.cookiePopupBoxContainer .cookieTitle p{
-  margin: 0 0 8px;
-  font-family: var(--font-display, "Fraunces", Georgia, serif);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--white, #FFFFFF);
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
 }
 
-.cookiePopupBoxContainer .cookieDesc p{
-  margin: 0;
-  color: rgba(247, 244, 238, .82);
+function eraseCookie(name) {
+    document.cookie = name+'=; Max-Age=-99999999;';
 }
 
-.cookiePopupBoxContainer .cookieDesc a{
-  color: #9FD8C8;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.cookiePopupBoxContainer .cookieDesc a:hover{
-  color: var(--white, #FFFFFF);
-}
-
-.cookiePopupBoxContainer .cookieButton{
-  margin-top: 16px;
-}
-
-.cookiePopupBoxContainer .cookieButton btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  cursor: pointer;
-  user-select: none;
-
-  background: var(--emerald, #1F6F5C);
-  color: var(--white, #FFFFFF);
-  font-family: inherit;
-  font-size: 14.5px;
-  font-weight: 600;
-  padding: 11px 20px;
-  border-radius: 999px;
-  border: 1.5px solid transparent;
-  transition: background .2s ease, transform .2s ease;
-}
-
-.cookiePopupBoxContainer .cookieButton btn:hover{
-  background: var(--emerald-d, #18584A);
-  transform: translateY(-1px);
-}
-
-.cookiePopupBoxContainer .cookieButton btn:focus-visible{
-  outline: 2.5px solid var(--emerald, #1F6F5C);
-  outline-offset: 3px;
-}
-
-@media (min-width: 540px){
-  .cookiePopupBoxContainer{
-    left: 24px;
-    right: auto;
-    bottom: 24px;
-  }
-  .cookiePopupBoxContainer .cookieButton btn{
-    width: auto;
-    padding: 11px 28px;
+function cookiePopupBox() {
+  if (!getCookie('cookiePopupDismiss')) {
+    document.body.innerHTML += '<div class="cookiePopupBoxContainer" id="cookiePopupBoxContainer"><div class="cookieTitle"><p>' + cookiePopupTitle + '</p></div><div class="cookieDesc"><p>' + cookiePopupDesc + ' ' + cookiePopupLink + '</p></div><div class="cookieButton"><btn onClick="cookiePopupDismiss();" href="#">' + cookiePopupButton + '</btn></div></div>';
+	pureFadeIn("cookiePopupBoxContainer");
   }
 }
+
+function cookiePopupDismiss() {
+  setCookie('cookiePopupDismiss','1',7);
+  pureFadeOut("cookiePopupBoxContainer");
+}
+
+window.onload = function() { cookiePopupBox(); };
